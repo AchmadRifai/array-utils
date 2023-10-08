@@ -1,0 +1,71 @@
+package arrayutils
+
+func NoneOf[V interface{}](array []V, predicate func(v V, index int) bool) bool {
+	return !AnyOf(array, predicate)
+}
+
+func AnyOf[V interface{}](array []V, predicate func(v V, index int) bool) bool {
+	for i, v := range array {
+		if predicate(v, i) {
+			return true
+		}
+	}
+	return false
+}
+
+func AllOf[V interface{}](array []V, predicate func(v V, index int) bool) bool {
+	for i, v := range array {
+		if !predicate(v, i) {
+			return false
+		}
+	}
+	return true
+}
+
+func Filter[V interface{}](array []V, predicate func(v V, index int) bool) []V {
+	var newArray []V
+	for i, v := range array {
+		if predicate(v, i) {
+			newArray = append(newArray, v)
+		}
+	}
+	return newArray
+}
+
+func Map[V, S interface{}](array []V, convert func(v V, index int) S) []S {
+	var newArray []S
+	for i, v := range array {
+		newArray = append(newArray, convert(v, i))
+	}
+	return newArray
+}
+
+func Distinct[V comparable](array []V) []V {
+	var newArray []V
+	for _, v := range array {
+		if !Contains(newArray, v) {
+			newArray = append(newArray, v)
+		}
+	}
+	return newArray
+}
+
+func Contains[V comparable](array []V, v V) bool {
+	for _, i := range array {
+		if i == v {
+			return true
+		}
+	}
+	return false
+}
+
+func AddAll[V interface{}](array1, array2 []V) []V {
+	var newArray []V
+	for _, v := range array1 {
+		newArray = append(newArray, v)
+	}
+	for _, v := range array2 {
+		newArray = append(newArray, v)
+	}
+	return newArray
+}

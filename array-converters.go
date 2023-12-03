@@ -32,6 +32,17 @@ func Filter[V interface{}](array []V, predicate func(v V, index int) bool) []V {
 	return newArray
 }
 
+func Grouping[V interface{}, S comparable](array []V, classifier func(v V, index int) S) map[S][]V {
+	result := make(map[S][]V)
+	for _, v := range Distinct(Map(array, classifier)) {
+		result[v] = Filter(array,
+			func(d V, i int) bool {
+				return classifier(d, i) == v
+			})
+	}
+	return result
+}
+
 func Map[V, S interface{}](array []V, convert func(v V, index int) S) []S {
 	var newArray []S
 	for i, v := range array {

@@ -5,6 +5,28 @@ import (
 	"testing"
 )
 
+type Bahan struct {
+	Nilai int
+	Team  string
+}
+
+func TestGrouping(t *testing.T) {
+	bahan := Map(IntsRangeClosed(1, 10), func(v int, i int) Bahan {
+		var b Bahan
+		if v%2 == 0 {
+			b.Team = "Genap"
+		} else {
+			b.Team = "Ganjil"
+		}
+		b.Nilai = v
+		return b
+	})
+	result := Grouping(bahan, func(b Bahan, i int) string { return b.Team })
+	if 2 != len(result) {
+		t.Errorf("Error! map size must be 2")
+	}
+}
+
 func TestDistinct(t *testing.T) {
 	result := Distinct(Map(IntsRange(0, 6), func(v int, _ int) int { return 0 }))
 	if 1 != len(result) {

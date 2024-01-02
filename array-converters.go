@@ -43,6 +43,14 @@ func Grouping[V interface{}, S comparable](array []V, classifier func(v V, index
 	return result
 }
 
+func FlatMap[V, S interface{}](source []V, convert func(V, int) []S) []S {
+	var newArray []S
+	for i, v := range source {
+		newArray = AddAll(newArray, convert(v, i))
+	}
+	return newArray
+}
+
 func Map[V, S interface{}](array []V, convert func(v V, index int) S) []S {
 	var newArray []S
 	for i, v := range array {

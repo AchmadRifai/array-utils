@@ -10,6 +10,18 @@ type Bahan struct {
 	Team  string
 }
 
+func TestFlatMap(t *testing.T) {
+	bahan := Map(IntsRangeClosed(1, 10), func(v int, i int) []int {
+		var r []int
+		r = append(r, v)
+		return r
+	})
+	result := FlatMap(bahan, func(i1 []int, i2 int) []int { return i1 })
+	if Contains(result, 0) {
+		t.Errorf("Error! 0 is exclude")
+	}
+}
+
 func TestGrouping(t *testing.T) {
 	bahan := Map(IntsRangeClosed(1, 10), func(v int, i int) Bahan {
 		var b Bahan

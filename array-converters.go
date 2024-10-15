@@ -80,11 +80,7 @@ func Contains[V comparable](array []V, v V) bool {
 
 func AddAll[V interface{}](array1, array2 []V) []V {
 	var newArray []V
-	for _, v := range array1 {
-		newArray = append(newArray, v)
-	}
-	for _, v := range array2 {
-		newArray = append(newArray, v)
-	}
+	newArray = append(newArray, array1...)
+	newArray = append(newArray, array2...)
 	return newArray
 }
